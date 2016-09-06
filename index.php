@@ -138,25 +138,26 @@ echo "Il y a eu le plus de sortie durant ".$indice_max3.'.</br>';
 
 //les dix meilleurs films à voir avec budget limité
 $tab4 = [];
-foreach ( $top as $index => $films ) {
-    if ( ! empty(return_label('im:rentalPrice', $index, $top)) ) {
-    $price = explode( '$', return_label('im:rentalPrice', $index, $top) )[1];
-    $title = return_label('im:name', $index, $top);
-    $tab4[$title] = $price;
-    }
+for($i = 0; $i < count($top); $i++) {
+    $artist = $top[$i]['im:name']['label'];
+    $prix = $top[$i]['im:price']['attributes']['amount'];
+    $tab4[$artist] = $prix;
 }
 asort($tab4);
-echo "<ol>";
-for ($index = 0; $index < 10; $index++) {
-    echo '<li>'.key($tab4).'</li>'."\n";
-    array_shift($tab4);
+$compteur = 0;
+echo '<ol>';
+foreach ($tab4 as $key => $value){
+    $compteur++;
+    if ($compteur <= 10) {
+    echo '<li>'.$key."</li>";
+        }
 }
-echo "</ol>";
-
-echo "<pre>";
-print_r($top);
-echo "<pre/>";
+echo '</ol>';
 
 ?>
+
+<pre>
+    <?php print_r($top); ?>
+</pre>
 
 
