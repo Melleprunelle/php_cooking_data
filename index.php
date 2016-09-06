@@ -136,12 +136,12 @@ $indice_max3 = array_search(max($tab3), $tab3);
 $indice_max3 = stristr($indice_max3, ' ', true);
 echo "Il y a eu le plus de sortie durant ".$indice_max3.'.</br>';
 
-//les dix meilleurs films à voir avec budget limité
+//les dix meilleurs films à voir avec budget limité : prix
 $tab4 = [];
 for($i = 0; $i < count($top); $i++) {
-    $artist = $top[$i]['im:name']['label'];
+    $titre = $top[$i]['im:name']['label'];
     $prix = $top[$i]['im:price']['attributes']['amount'];
-    $tab4[$artist] = $prix;
+    $tab4[$titre] = $prix;
 }
 asort($tab4);
 $compteur = 0;
@@ -154,10 +154,29 @@ foreach ($tab4 as $key => $value){
 }
 echo '</ol>';
 
+//les dix meilleurs films à voir avec budget limité : location
+$tab5 = [];
+for($i = 0; $i < count($top); $i++) {
+    $titre = $top[$i]['im:name']['label'];
+    $location = $top[$i]['im:rentalPrice']['attributes']['amount'];
+    $tab5[$titre] = $location;
+}
+asort($tab5);
+$compteur1 = 0;
+echo '<ol>';
+foreach ($tab5 as $key => $value){
+    if ($value == null) {
+        $key++;
+    }
+    elseif ($compteur1 < 10) {
+        echo '<li>'.$key.'</li>';
+        $compteur1++;
+    }
+}
+echo '</ol></br>';
+
 ?>
 
-<pre>
+    <pre>
     <?php print_r($top); ?>
 </pre>
-
-
