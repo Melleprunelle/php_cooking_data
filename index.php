@@ -61,7 +61,7 @@ for($i = 0; $i < count($top); $i++) {
 
 //Réalisateur du film lego movie.
 for($i = 0; $i < count($top); $i++) {
-        if($top[$i-1]['im:name']['label'] == "The LEGO Movie") {
+        if($top[$i]['im:name']['label'] == "The LEGO Movie") {
             echo "Les auteurs de The LEGO Movie sont ".$top[$i]['im:artist']['label'].".</br>";
         } 
 }
@@ -122,6 +122,7 @@ for($i = 0; $i <= 10; $i++) {
         $total2 = $total2 + $top[$i]['im:rentalPrice']['attributes']['amount'];
         
 }
+echo "Le prix du top 10 est de ".$total."$.</br>";
 echo "Le location du top 10 est de ".$total2."$.</br>";
 
 //le mois ayant plus de vues
@@ -135,8 +136,27 @@ $indice_max3 = array_search(max($tab3), $tab3);
 $indice_max3 = stristr($indice_max3, ' ', true);
 echo "Il y a eu le plus de sortie durant ".$indice_max3.'.</br>';
 
+//les dix meilleurs films à voir avec budget limité
+$tab4 = [];
+foreach ( $top as $index => $films ) {
+    if ( ! empty(return_label('im:rentalPrice', $index, $top)) ) {
+    $price = explode( '$', return_label('im:rentalPrice', $index, $top) )[1];
+    $title = return_label('im:name', $index, $top);
+    $tab4[$title] = $price;
+    }
+}
+asort($tab4);
+echo "<ol>";
+for ($index = 0; $index < 10; $index++) {
+    echo '<li>'.key($tab4).'</li>'."\n";
+    array_shift($tab4);
+}
+echo "</ol>";
+
 echo "<pre>";
 print_r($top);
 echo "<pre/>";
 
-//$valeur2 = substr(strrchr($valeur2, "-"),0);
+?>
+
+
